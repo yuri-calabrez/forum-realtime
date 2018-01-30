@@ -5,14 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Document</title>
+    <title>My Heroes - Forum</title>
+
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
-    @yield('content')
+    <header>
+        @include('layouts.default.header')
+    </header>
+    <main>
+        <section id="app">
+            @yield('content')
+        </section>
+    </main>
+   
+     @include('layouts.default.footer')
 
-    <script src="/js/manifest.js"></script>
-    <script src="/js/vendor.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/threads.js"></script>
+     @component('layouts.default.body_scripts')
+        @yield('scripts')
+     @endcomponent
 </body>
 </html>

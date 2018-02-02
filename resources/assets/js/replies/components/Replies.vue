@@ -1,35 +1,9 @@
 <template>
     <div>
-        <div class="card">
+        <div class="card" v-for="data in replies">
             <div class="card-content">
-                <span class="card-title">Yuri {{replied}}</span>
-                <blockquote>
-                    Iusto sit hic excepturi. Voluptatem similique dolore nihil non in odio magnam. 
-                    Quaerat sit consequatur qui eligendi. Sit excepturi tempore voluptas dolorem est 
-                    blanditiis eum. Voluptas est omnis ipsam.
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">Yuri {{replied}}</span>
-                <blockquote>
-                    Iusto sit hic excepturi. Voluptatem similique dolore nihil non in odio magnam. 
-                    Quaerat sit consequatur qui eligendi. Sit excepturi tempore voluptas dolorem est 
-                    blanditiis eum. Voluptas est omnis ipsam.
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">Yuri {{replied}}</span>
-                <blockquote>
-                    Iusto sit hic excepturi. Voluptatem similique dolore nihil non in odio magnam. 
-                    Quaerat sit consequatur qui eligendi. Sit excepturi tempore voluptas dolorem est 
-                    blanditiis eum. Voluptas est omnis ipsam.
-                </blockquote>
+                <span class="card-title">{{data.user.name}} {{replied}}</span>
+                <blockquote>{{data.body}}</blockquote>
             </div>
         </div>
 
@@ -37,9 +11,9 @@
             <div class="card-content">
                <span class="card-title">{{reply}}</span>
 
-               <form>
+               <form @submit.prevent="save()">
                    <div class="input-field">
-                       <textarea name="" rows="10" :placeholder="yourAnswer" class="materialize-textarea"></textarea>
+                       <textarea name="" rows="10" v-model="reply_to_save.body" :placeholder="yourAnswer" class="materialize-textarea"></textarea>
                    </div>
 
                    <button type="submit" class="btn red accent-2">{{send}}</button>
@@ -55,7 +29,35 @@
             'replied',
             'reply',
             'yourAnswer',
-            'send'
-        ]
+            'send',
+            'threadId'
+        ],
+        data(){
+            return {
+                replies: [],
+                thread_id: this.threadId,
+                reply_to_save: {
+                    body: '',
+                    thread_id: this.threadId
+                }
+            }
+        },
+        methods: {
+            getReplies(){
+                axios.get(`/replies/${this.thread_id}`)
+                    .then((response) => {
+                        this.replies = response.data;
+                    })
+            },
+            save(){
+                axios.post('/replies', this.reply_to_save)
+                    .then(() => {
+                        this.getReplies();
+                    });
+            }
+        },
+        mounted(){
+            this.getReplies();
+        }
     }
 </script>

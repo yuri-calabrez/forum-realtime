@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/threads/{thread}/edit', function(\App\Thread $thread){
         return view('threads.edit', compact('thread'));
     });
+    Route::get('/replies/{id}', 'RepliesController@show');
+    Route::post('/replies', 'RepliesController@store');
 });
 
 Auth::routes();

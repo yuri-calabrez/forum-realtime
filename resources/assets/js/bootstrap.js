@@ -54,3 +54,46 @@ window.Echo = new Echo({
     cluster: 'us2',
     encrypted: false
 });
+
+import swal from 'sweetalert2';
+
+const successCallBack = (response) => {
+    return response;
+};
+
+const errorCallBack = (error) => {
+    if(error.response.status === 401) {
+        swal({
+            title: 'Autenticação',
+            text: 'Para acessar este recurso você precisa estar autenticado!',
+            type: 'warning',
+            confirmButtonText: 'OK!',
+            showCancelButton: true,
+            cancelButtonText: 'Não, Obrigado.'
+        })
+        .then((result) => {
+            if(result.value) {
+                window.location = '/login';
+            }
+        });
+    } else {
+        swal({
+            title: 'Erro!',
+            text: 'Ops! Algo deu errado',
+            type: 'error',
+            confirmButtonText: 'OK!'
+        });
+    }
+
+    return Promise.reject(error);
+}
+
+window.axios.interceptors.response.use(successCallBack, errorCallBack);
+
+window.Vue = require('vue');
+
+Vue.component('loader', require('./commons/AxiosLoader.vue'));
+
+const commonApps = new Vue({
+    el: '#loader'
+})

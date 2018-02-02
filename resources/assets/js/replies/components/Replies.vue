@@ -58,6 +58,13 @@
         },
         mounted(){
             this.getReplies();
+
+            Echo.channel(`new.reply.${this.thread_id}`)
+                .listen('NewReply', (e) => {
+                    if(e.reply) {
+                        this.getReplies();
+                    }
+                });
         }
     }
 </script>

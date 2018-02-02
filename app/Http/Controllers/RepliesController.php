@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Reply;
 use App\Http\Requests\ReplyRequest;
+use App\Events\NewReply;
 
 class RepliesController extends Controller
 {
@@ -25,6 +26,8 @@ class RepliesController extends Controller
         $reply->user_id = \Auth::user()->id;
 
         $reply->save();
+
+        broadcast(new NewReply($reply));
 
         return response()->json($reply);
     }

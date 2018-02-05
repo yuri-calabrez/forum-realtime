@@ -58,6 +58,10 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
+
+                                <a class="btn blue" href="/login/facebook">
+                                    Login com Facebook
+                                </a>
                             </div>
                         </div>
                     </form>

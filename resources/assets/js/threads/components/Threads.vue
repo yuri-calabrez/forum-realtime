@@ -12,12 +12,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="thread in threads_response.data">
+                    <tr v-for="thread in threads_response.data" :class="{'lime lighten-4': thread.fixed}">
                         <td>{{thread.id}}</td>
                         <td>{{thread.title}}</td>
-                        <td>0</td>
+                        <td>{{thread.replies_count || 0}}</td>
                         <td>
-                            <a :href="'threads/' + thread.id">{{open}}</a>
+                            <a :href="'threads/' + thread.id" class="btn">{{open}}</a>
+                             <a :href="'threads/pin/' + thread.id" 
+                                class="btn blue" v-if="logged.role === 'admin'">Pin</a>
+                            <a :href="'threads/close/' + thread.id" 
+                                class="btn red" v-if="logged.role === 'admin'">Close Thread</a>
                         </td>
                     </tr>
                 </tbody>
@@ -56,6 +60,7 @@
       data(){
           return {
               threads_response: [],
+              logged: window.user || {},
               threads_to_save: {
                   title: '',
                   body: ''

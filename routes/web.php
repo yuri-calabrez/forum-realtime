@@ -29,17 +29,19 @@ Route::get('/threads', 'ThreadsController@index');
 Route::get('/replies/{id}', 'RepliesController@show');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/threads/pin/{thread}', 'ThreadsController@pin');
+    Route::get('/threads/close/{thread}', 'ThreadsController@closeThread');
     Route::post('/threads', 'ThreadsController@store');
     Route::put('/threads/{thread}', 'ThreadsController@update');
     Route::get('/threads/{thread}/edit', function(\App\Thread $thread){
         return view('threads.edit', compact('thread'));
     });
     Route::post('/replies', 'RepliesController@store');
+    
+    Route::get('/replies/highlight/{id}', 'RepliesController@highlight');
 });
 
 Route::get('/login/{provider}', 'SocialAuthController@redirect');
 Route::get('/login/{provider}/callback', 'SocialAuthController@callback');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

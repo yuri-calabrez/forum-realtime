@@ -17,6 +17,7 @@ class CreateAdminData extends Migration
             'name' => 'Admin',
             'email' => 'admin@user.com',
             'password' => bcrypt('123456'),
+            'role' => 'admin',
             'remember_token' => str_random(6)
         ]);
     }

@@ -39,6 +39,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/replies', 'RepliesController@store');
     
     Route::get('/replies/highlight/{id}', 'RepliesController@highlight');
+
+    Route::get('/profile', 'ProfileController@edit');
+    Route::post('/profile', 'ProfileController@update');
 });
 
 Route::get('/login/{provider}', 'SocialAuthController@redirect');

@@ -1,13 +1,19 @@
 <template>
     <div>
-        <div class="card" v-for="data in replies" :class="{'lime lighten-4': data.highlited}">
-            <div class="card-content">
-                <span class="card-title">{{data.user.name}} {{replied}}</span>
-                <blockquote>{{data.body}}</blockquote>
+        <div class="card horizontal" v-for="data in replies" :class="{'lime lighten-4': data.highlited}">
+            <div class="card-images">
+                <img :src="data.user.photo_url" :alt="data.user.name"/>
             </div>
 
-            <div class="card-action" v-if="logged.role === 'admin'">
-                <a :href="`/replies/highlight/${data.id}`">Em destaque</a>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <span class="card-title">{{data.user.name}} {{replied}}</span>
+                    <blockquote>{{data.body}}</blockquote>
+                </div>
+
+                <div class="card-action" v-if="logged.role === 'admin'">
+                    <a :href="`/replies/highlight/${data.id}`">Em destaque</a>
+                </div>
             </div>
         </div>
 

@@ -225,6 +225,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['replied', 'reply', 'yourAnswer', 'send', 'threadId', 'isClosed'],
@@ -285,25 +291,36 @@ var render = function() {
       _vm._l(_vm.replies, function(data) {
         return _c(
           "div",
-          { staticClass: "card", class: { "lime lighten-4": data.highlited } },
+          {
+            staticClass: "card horizontal",
+            class: { "lime lighten-4": data.highlited }
+          },
           [
-            _c("div", { staticClass: "card-content" }, [
-              _c("span", { staticClass: "card-title" }, [
-                _vm._v(_vm._s(data.user.name) + " " + _vm._s(_vm.replied))
-              ]),
-              _vm._v(" "),
-              _c("blockquote", [_vm._v(_vm._s(data.body))])
+            _c("div", { staticClass: "card-images" }, [
+              _c("img", {
+                attrs: { src: data.user.photo_url, alt: data.user.name }
+              })
             ]),
             _vm._v(" "),
-            _vm.logged.role === "admin"
-              ? _c("div", { staticClass: "card-action" }, [
-                  _c(
-                    "a",
-                    { attrs: { href: "/replies/highlight/" + data.id } },
-                    [_vm._v("Em destaque")]
-                  )
-                ])
-              : _vm._e()
+            _c("div", { staticClass: "card-stacked" }, [
+              _c("div", { staticClass: "card-content" }, [
+                _c("span", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(data.user.name) + " " + _vm._s(_vm.replied))
+                ]),
+                _vm._v(" "),
+                _c("blockquote", [_vm._v(_vm._s(data.body))])
+              ]),
+              _vm._v(" "),
+              _vm.logged.role === "admin"
+                ? _c("div", { staticClass: "card-action" }, [
+                    _c(
+                      "a",
+                      { attrs: { href: "/replies/highlight/" + data.id } },
+                      [_vm._v("Em destaque")]
+                    )
+                  ])
+                : _vm._e()
+            ])
           ]
         )
       }),
